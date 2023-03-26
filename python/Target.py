@@ -11,6 +11,9 @@ class Target:
     def is_simple_enemy() -> bool:
         pass
 
+    def __get_soak_2(self, total_damage: int) -> int:
+        pass
+
 
 class SimpleEnemy(Target):
     armor: Armor
@@ -25,3 +28,12 @@ class SimpleEnemy(Target):
 
     def is_simple_enemy() -> bool:
         return True
+
+    def __get_soak_2(self, total_damage: int) -> int:
+        if self.is_player():
+            # TODO: Not implemented yet
+            #   Add friendly fire
+            soak = total_damage
+        elif self.is_simple_enemy():
+            soak = Player.__get_soak_for_simple_enemy(self)
+        return soak
