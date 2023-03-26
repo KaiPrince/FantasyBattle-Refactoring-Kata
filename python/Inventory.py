@@ -1,3 +1,4 @@
 class Inventory:
-    def __init__(self, equipment):
-        self.equipment = equipment
+    def __init__(self):
+        # Future: Add consumables or something
+        pass
