@@ -1,4 +1,5 @@
 from Item import Item
+from Damage import Damage
 
 
 class Equipment:
@@ -10,19 +11,25 @@ class Equipment:
         chest: Item,
         feet: Item,
     ) -> None:
-        self.chest = chest
-        self.feet = feet
-        self.left_hand = left_hand
-        self.right_hand = right_hand
-        self.head = head
+        self._chest = chest
+        self._feet = feet
+        self._left_hand = left_hand
+        self._right_hand = right_hand
+        self._head = head
 
-    def get_damage(self):
-        return self.left_hand.base_damage + self.right_hand.base_damage
+    def update_damage(self, damage: Damage) -> Damage:
+        result = damage
+        for item in [
+            self._left_hand,
+            self._right_hand,
+            self._head,
+            self._chest,
+            self._feet,
+        ]:
+            result = item.update_damage(result)
+        return result
 
-    def get_damage_modifier(self):
-        return self.left_hand.damage_modifier + self.right_hand.damage_modifier
-
-    def get_soak(self):
+    def update_soak(self, damage: Damage) -> Damage:
         # Future: implement damage soak by converting head, chest, and
         #   feet to Armor
-        return 0
+        return damage

@@ -2,6 +2,7 @@ from Equipment import Equipment
 from Inventory import Inventory
 from Stats import Stats
 from Target import Target
+from Damage import Damage
 
 
 class Player(Target):
@@ -11,20 +12,15 @@ class Player(Target):
         equipment: Equipment,
         stats: Stats,
     ) -> None:
-        self.stats = stats
-        self.inventory = inventory
-        self.equipment = equipment
+        self._stats = stats
+        self._inventory = inventory
+        self._equipment = equipment
 
-    def calculate_damage(self) -> int:
-        base_damage = self.equipment.get_damage()
-        damage_modifier = self.__get_damage_modifier()
-        total_damage = round(base_damage * damage_modifier)
-        return total_damage
+    def calculate_damage(self) -> Damage:
+        damage = Damage(0)
+        damage = self._equipment.update_damage(damage)
+        damage = self._stats.update_damage(damage)
+        return damage
 
-    def __get_damage_modifier(self):
-        equipment_damage_modifier = self.equipment.get_damage_modifier()
-        stats_damage_modifier = self.stats.get_damage_modifier()
-        return stats_damage_modifier + equipment_damage_modifier
-
-    def calculate_soak(self, damage: int) -> int:
-        return self.equipment.get_soak()
+    def calculate_soak(self, damage: Damage) -> Damage:
+        return self._equipment.update_soak(damage)

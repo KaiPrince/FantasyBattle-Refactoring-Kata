@@ -24,8 +24,8 @@ def player_calculate_damage_test():
     damage = player.calculate_damage()
 
     # Assert
-    print(damage)
-    assert damage == 25
+    print(damage.calculate_damage())
+    assert damage.calculate_damage() == 52
 
 
 def damage_between_targets_test():
@@ -37,8 +37,8 @@ def damage_between_targets_test():
     result = Damage.betweenTargets(player, enemy)
 
     # Assert
-    print(result.amount)
-    assert result.amount == 15
+    print(result.calculate_damage())
+    assert result.calculate_damage() == 42
 
 
 def damage_to_player_test():
@@ -50,8 +50,8 @@ def damage_to_player_test():
     result = Damage.betweenTargets(enemy, player)
 
     # Assert
-    print(result.amount)
-    assert result.amount == 0
+    print(result._amount)
+    assert result._amount == 0
 
 
 def _build_player():

@@ -1,7 +1,10 @@
+from Damage import Damage
+
+
 class Stats:
     def __init__(self, strength: int) -> None:
-        self.strength = strength
+        self._strength = strength
 
-    def get_damage_modifier(self):
-        strength_modifier: float = self.strength * 0.1
-        return strength_modifier
+    def update_damage(self, damage: Damage) -> Damage:
+        strength_modifier: float = self._strength * 0.1
+        return damage.apply_damage(0, strength_modifier)
