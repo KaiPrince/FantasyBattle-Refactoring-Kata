@@ -10,16 +10,16 @@ class Target:
 
 
 class SimpleEnemy(Target):
-    armor: Armor
-    buffs: List[Buff]
+    _armor: Armor
+    _buffs: List[Buff]
 
     def __init__(self, armor: Armor, buffs: List[Buff]) -> None:
-        self.armor = armor
-        self.buffs = buffs
+        self._armor = armor
+        self._buffs = buffs
 
     def get_soak(self, total_damage: int) -> int:
         soak = round(
-            self.armor.damage_soak
-            * (sum(buff.soak_modifier for buff in self.buffs) + 1)
+            self._armor.damage_soak
+            * (sum(buff.soak_modifier for buff in self._buffs) + 1)
         )
         return soak

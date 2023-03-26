@@ -1,5 +1,5 @@
 class Damage:
-    amount: int
+    _amount: int
 
     def __init__(self, amount: int) -> None:
-        self.amount = amount
+        self._amount = amount

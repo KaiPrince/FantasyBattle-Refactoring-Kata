@@ -1,7 +1,7 @@
 class Armor:
-    damage_soak: int
+    pass
 
 
 class SimpleArmor(Armor):
-    def __init__(self, damage_soak):
-        self.damage_soak = damage_soak
+    def __init__(self, damage_soak: int):
+        self._damage_soak = damage_soak

@@ -24,7 +24,7 @@ def test_player_calculate_damage():
     damage = player.calculate_damage(enemy)
 
     # Assert
-    assert damage.amount == 42
+    assert damage._amount == 42
 
 
 def _build_player():
