@@ -7,5 +7,5 @@ class Stats:
 
     def apply_damage(self, damage: Damage) -> Damage:
         strength_modifier: float = self._strength * 0.1
-        result = damage.add_damage_modifier(strength_modifier)
+        result = damage.add_modifier(strength_modifier)
         return result

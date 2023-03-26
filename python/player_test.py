@@ -18,13 +18,38 @@ from Buff import Buff
 def test_player_calculate_damage():
     # Arrange
     player = _build_player()
+
+    # Act
+    damage = player.calculate_damage()
+
+    # Assert
+    assert damage._amount == 10
+    assert damage._modifier - 5.2 < 0.01
+
+
+def test_enemy_apply_damage_soak():
+    # Arrange
     enemy = _build_enemy()
 
     # Act
-    damage = player.calculate_damage(enemy)
+    soak = enemy.calculate_soak()
 
     # Assert
-    assert damage.calculate_damage() == 42
+    assert soak._amount == 5
+    assert soak._modifier - 3 < 0.01
+
+
+def test_damage_calculation_strategy():
+    # Arrange
+    player = _build_player()
+    enemy = _build_enemy()
+    damage = player.calculate_damage()
+    soak = enemy.calculate_soak()
+
+    # Act
+    result = damage.calculate() - soak.calculate_soak()
+    # Assert
+    assert result == 42
 
 
 def _build_player():

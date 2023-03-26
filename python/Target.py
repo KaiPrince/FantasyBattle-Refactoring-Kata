@@ -3,10 +3,11 @@ from typing import List
 from Armor import Armor
 from Buff import Buff
 from Damage import Damage
+from Soak import Soak
 
 
 class Target:
-    def apply_damage_soak(self, damage: Damage) -> Damage:
+    def calculate_soak(self, damage: Damage) -> Soak:
         pass
 
 
@@ -18,8 +19,9 @@ class SimpleEnemy(Target):
         self._armor = armor
         self._buffs = buffs
 
-    def apply_damage_soak(self, damage: Damage) -> Damage:
-        result = self._armor.apply_damage_soak(damage)
+    def calculate_soak(self) -> Soak:
+        soak = Soak(0)
+        soak = self._armor.apply_damage_soak(soak)
         for buff in self._buffs:
-            result = buff.apply_damage_soak(result)
-        return result
+            soak = buff.apply_damage_soak(soak)
+        return soak

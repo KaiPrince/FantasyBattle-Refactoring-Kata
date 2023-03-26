@@ -15,6 +15,6 @@ class Item:
         self._damage_modifier = damage_modifier
 
     def apply_damage(self, damage: Damage) -> Damage:
-        with_damage = damage.add_damage(self._base_damage)
-        result = with_damage.add_damage_modifier(self._damage_modifier)
+        with_damage = damage.add_amount(self._base_damage)
+        result = with_damage.add_modifier(self._damage_modifier)
         return result
