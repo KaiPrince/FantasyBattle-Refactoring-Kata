@@ -10,6 +10,7 @@ from Inventory import Inventory
 from Equipment import Equipment
 from Item import BaseItem
 from Stats import Stats
+from DamageCalculation import DamageCalculation
 
 
 def player_calculate_damage_test():
@@ -26,7 +27,7 @@ def player_calculate_damage_test():
     player_2 = Player(inventory, equipment, stats)
 
     # Act
-    result = player.calculate_damage(player_2)
+    result = DamageCalculation.betweenTargets(player, player_2)
 
     # Assert
     print(result.amount)

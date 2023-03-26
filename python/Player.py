@@ -16,14 +16,11 @@ class Player(Target):
         self.inventory = inventory
         self.equipment = equipment
 
-    def calculate_damage(self, other: Target) -> Damage:
-        return Damage.onTarget(self, other)
-
-    def get_damage(self) -> int:
+    def calculate_damage(self) -> Damage:
         base_damage = self.__get_base_damage()
         damage_modifier = self.__get_damage_modifier()
         total_damage = round(base_damage * damage_modifier)
-        return total_damage
+        return Damage(total_damage)
 
     def __get_base_damage(self):
         return self.equipment.get_damage()
