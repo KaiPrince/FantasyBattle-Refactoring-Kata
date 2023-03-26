@@ -81,21 +81,26 @@ class Player(Target):
         return soak
 
     @staticmethod
-    def __do_get_soak(other, total_damage):
-        if isinstance(other, Player):
+    def __do_get_soak(other: Target, total_damage: int) -> int:
+        if other.is_player():
             # TODO: Not implemented yet
             #   Add friendly fire
             soak = total_damage
-        elif isinstance(other, SimpleEnemy):
-            soak = Player.__get_soak_for_other(other)
+        elif other.is_simple_enemy():
+            soak = Player.__get_soak_for_simple_enemy(other)
         return soak
 
     @staticmethod
-    def __get_soak_for_other(other):
-        simple_enemy: SimpleEnemy = other
+    def __get_soak_for_simple_enemy(simple_enemy: SimpleEnemy):
         soak = round(
             simple_enemy.armor.damage_soak
             * (sum(buff.soak_modifier for buff in simple_enemy.buffs) + 1)
         )
 
         return soak
+
+    def is_player() -> bool:
+        return True
+
+    def is_simple_enemy() -> bool:
+        return False
