@@ -11,6 +11,9 @@ from Equipment import Equipment
 from Item import BaseItem
 from Stats import Stats
 from Damage import Damage
+from Target import SimpleEnemy
+from Armor import SimpleArmor
+from Buff import BasicBuff
 
 
 def player_calculate_damage_test():
@@ -24,18 +27,20 @@ def player_calculate_damage_test():
     inventory = Inventory()
     stats = Stats(1)
     player = Player(inventory, equipment, stats)
-    player_2 = Player(inventory, equipment, stats)
+    armor = SimpleArmor(1)
+    buffs = [BasicBuff(1.0, 1.5)]
+    target = SimpleEnemy(armor, buffs)
 
     # Act
     damage = player.calculate_damage()
-    result = Damage.betweenTargets(player, player_2)
+    result = Damage.betweenTargets(player, target)
 
     # Assert
     print(damage)
     assert damage == 28
 
     print(result.amount)
-    assert result.amount == 0
+    assert result.amount == 26
 
 
 player_calculate_damage_test()

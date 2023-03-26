@@ -29,7 +29,7 @@ class SimpleEnemy(Target):
 
     def calculate_soak(self, damage: int) -> int:
         amount = round(
-            self.armor.damage_soak.amount
+            self.armor.damage_soak
             * (sum(buff.soak_modifier for buff in self.buffs) + 1)
         )
         return amount
