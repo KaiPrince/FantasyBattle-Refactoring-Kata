@@ -77,7 +77,11 @@ class Player(Target):
 
     @staticmethod
     def __get_soak(other: Target, total_damage: int):
-        soak: int = 0
+        soak: int = Player.__do_get_soak(other, total_damage)
+        return soak
+
+    @staticmethod
+    def __do_get_soak(other, total_damage):
         if isinstance(other, Player):
             # TODO: Not implemented yet
             #   Add friendly fire
