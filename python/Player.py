@@ -7,7 +7,6 @@ from Target import Target, SimpleEnemy
 
 
 class Player(Target):
-
     def __init__(self, inventory: Inventory, stats: Stats) -> None:
         self.stats = stats
         self.inventory = inventory
@@ -22,35 +21,58 @@ class Player(Target):
     def __get_base_damage(self):
         inventory: Inventory = self.inventory
         equipment: Equipment = inventory.equipment
-        left_hand: Item = equipment.left_hand
-        right_hand: Item = equipment.right_hand
-        head: Item = equipment.head
-        feat: Item = equipment.feet
-        chest: Item = equipment.chest
+        return self.__do_base_damage_calculation(
+            equipment.left_hand,
+            equipment.right_hand,
+            equipment.head,
+            equipment.feet,
+            equipment.chest,
+        )
+
+    def __do_base_damage_calculation(
+        self,
+        left_hand: Item,
+        right_hand: Item,
+        head: Item,
+        feet: Item,
+        chest: Item,
+    ):
         return (
-            left_hand.base_damage +
-            right_hand.base_damage +
-            head.base_damage +
-            feat.base_damage +
-            chest.base_damage
+            left_hand.base_damage
+            + right_hand.base_damage
+            + head.base_damage
+            + feet.base_damage
+            + chest.base_damage
         )
 
     def __get_damage_modifier(self):
         equipment: Equipment = self.inventory.equipment
-        left_hand: Item = equipment.left_hand
-        right_hand: Item = equipment.right_hand
-        head: Item = equipment.head
-        feet: Item = equipment.feet
-        chest: Item = equipment.chest
-        stats: Stats = self.stats
+        return self.__do_damage_modifier_calculation(
+            equipment.left_hand,
+            equipment.right_hand,
+            equipment.head,
+            equipment.feet,
+            equipment.chest,
+            self.stats,
+        )
+
+    def __do_damage_modifier_calculation(
+        self,
+        left_hand: Item,
+        right_hand: Item,
+        head: Item,
+        feet: Item,
+        chest: Item,
+        stats: Stats,
+    ):
         strength_modifier: float = stats.strength * 0.1
         return (
-            strength_modifier +
-            left_hand.damage_modifier +
-            right_hand.damage_modifier +
-            head.damage_modifier +
-            feet.damage_modifier +
-            chest.damage_modifier
+            strength_modifier
+            + left_hand.damage_modifier
+            + right_hand.damage_modifier
+            + head.damage_modifier
+            + feet.damage_modifier
+            + chest.damage_modifier
         )
 
     @staticmethod
@@ -61,12 +83,15 @@ class Player(Target):
             #   Add friendly fire
             soak = total_damage
         elif isinstance(other, SimpleEnemy):
-            simple_enemy: SimpleEnemy = other
-            soak = round(
-                simple_enemy.armor.damage_soak *
-                (sum(
-                    buff.soak_modifier
-                    for buff in simple_enemy.buffs
-                ) + 1)
-            )
+            soak = Player.__get_soak_for_other(other)
+        return soak
+
+    @staticmethod
+    def __get_soak_for_other(other):
+        simple_enemy: SimpleEnemy = other
+        soak = round(
+            simple_enemy.armor.damage_soak
+            * (sum(buff.soak_modifier for buff in simple_enemy.buffs) + 1)
+        )
+
         return soak
