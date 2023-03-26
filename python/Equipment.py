@@ -23,5 +23,6 @@ class Equipment:
         return self.left_hand.damage_modifier + self.right_hand.damage_modifier
 
     def get_soak(self):
-        # TODO implement damage soak
+        # Future: implement damage soak by converting head, chest, and
+        #   feet to Armor
         return 0
