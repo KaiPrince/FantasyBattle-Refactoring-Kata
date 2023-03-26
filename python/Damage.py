@@ -1,54 +1,36 @@
+from DamageCalculationStrategy import CalculationStrategy
+
+
 class Damage:
     _amount: int
     _modifier: float
-    _basis = "damage"
+    _strategy: CalculationStrategy
 
     def __init__(
         self,
+        strategy: CalculationStrategy,
         amount: int,
         modifier: float = 0.0,
-        basis="damage",
     ) -> None:
+        self._strategy = strategy
         self._amount = amount
         self._modifier = modifier
-        self._basis = basis
 
     def add_amount(self, amount: int):
-        if self._basis == "damage":
-            total_amount = self._amount + amount
-            return Damage(
-                total_amount,
-                self._modifier,
-                basis="damage",
-            )
-        else:
-            total_soak = self._amount + amount
-            return Damage(
-                total_soak,
-                self._modifier,
-                basis="soak",
-            )
+        total_amount = self._amount + amount
+        return Damage(
+            self._strategy,
+            total_amount,
+            self._modifier,
+        )
 
     def add_modifier(self, modifier: float):
-        if self._basis == "damage":
-            total_modifier = self._modifier + modifier
-            return Damage(
-                self._amount,
-                total_modifier,
-                basis="damage",
-            )
-        else:
-            total_modifier = self._modifier + modifier
-            return Damage(
-                self._amount,
-                total_modifier,
-                basis="soak",
-            )
+        total_modifier = self._modifier + modifier
+        return Damage(
+            self._strategy,
+            self._amount,
+            total_modifier,
+        )
 
     def calculate(self) -> int:
-        if self._basis == "damage":
-            total_damage = round(self._amount * self._modifier)
-            return total_damage
-        else:
-            total_damage = round(self._amount * (self._modifier + 1))
-            return total_damage
+        return self._strategy.calculate(self._amount, self._modifier)
