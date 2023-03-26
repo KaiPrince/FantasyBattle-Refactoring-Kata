@@ -1,5 +1,4 @@
 from Damage import Damage
-from Soak import Soak
 
 
 class Buff:
@@ -11,6 +10,6 @@ class Buff:
         result = damage.add_modifier(self._damage_modifier)
         return result
 
-    def apply_damage_soak(self, soak: Soak) -> Soak:
+    def apply_damage_soak(self, soak: Damage) -> Damage:
         result = soak.add_modifier(self._soak_modifier)
         return result

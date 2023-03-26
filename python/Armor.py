@@ -1,4 +1,4 @@
-from Soak import Soak
+from Damage import Damage
 
 
 class Armor:
@@ -7,7 +7,7 @@ class Armor:
 
     def apply_damage_soak(
         self,
-        soak: Soak,
-    ) -> Soak:
+        soak: Damage,
+    ) -> Damage:
         result = soak.add_amount(self._damage_soak)
         return result

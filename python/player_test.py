@@ -47,7 +47,7 @@ def test_damage_calculation_strategy():
     soak = enemy.calculate_soak()
 
     # Act
-    result = damage.calculate() - soak.calculate_soak()
+    result = damage.calculate() - soak.calculate()
     # Assert
     assert result == 42
 

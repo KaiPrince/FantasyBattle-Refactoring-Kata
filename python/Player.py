@@ -1,6 +1,5 @@
 from Damage import Damage
 from Inventory import Inventory
-from Soak import Soak
 from Stats import Stats
 from Target import Target
 
@@ -11,14 +10,14 @@ class Player(Target):
         self._inventory = inventory
 
     def calculate_damage(self) -> Damage:
-        damage = Damage(0)
+        damage = Damage(0, basis="damage")
         damage = self._inventory.apply_damage(damage)
         damage = self._stats.apply_damage(damage)
         return damage
 
-    def calculate_soak(self) -> Soak:
+    def calculate_soak(self) -> Damage:
         # TODO: Not implemented yet
         #   Add friendly fire
-        soak = Soak()
+        soak = Damage(0, basis="soak")
 
         return soak
