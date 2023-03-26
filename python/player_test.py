@@ -18,46 +18,63 @@ from Buff import BasicBuff
 
 def player_calculate_damage_test():
     # Arrange
-    left_hand = BaseItem("left hand", 1, 1.0)
-    right_hand = BaseItem("right hand", 1, 1.5)
-    head = BaseItem("head", 1, 1.0)
-    chest = BaseItem("chest", 1, 1.0)
-    feet = BaseItem("feet", 1, 1.0)
-    equipment = Equipment(left_hand, right_hand, head, chest, feet)
-    inventory = Inventory()
-    stats = Stats(1)
-    player = Player(inventory, equipment, stats)
+    player = _build_player()
 
     # Act
     damage = player.calculate_damage()
 
     # Assert
     print(damage)
-    assert damage == 28
+    assert damage == 25
 
 
 def damage_between_targets_test():
     # Arrange
-    left_hand = BaseItem("left hand", 1, 1.0)
-    right_hand = BaseItem("right hand", 1, 1.5)
-    head = BaseItem("head", 1, 1.0)
-    chest = BaseItem("chest", 1, 1.0)
-    feet = BaseItem("feet", 1, 1.0)
+    player = _build_player()
+    enemy = _build_enemy()
+
+    # Act
+    result = Damage.betweenTargets(player, enemy)
+
+    # Assert
+    print(result.amount)
+    assert result.amount == 15
+
+
+def damage_to_player_test():
+    # Arrange
+    player = _build_player()
+    enemy = _build_enemy()
+
+    # Act
+    result = Damage.betweenTargets(enemy, player)
+
+    # Assert
+    print(result.amount)
+    assert result.amount == 0
+
+
+def _build_player():
+    # right_hand = BaseItem("excalibur", 20, 1.5)
+    right_hand = BaseItem("flashy sword of danger", 10, 1.0)
+    left_hand = BaseItem("round shield", 0, 1.4)
+    head = BaseItem("helmet of swiftness", 0, 1.2)
+    chest = BaseItem("breastplate of steel", 0, 1.4)
+    feet = BaseItem("ten league boots", 0, 0.1)
     equipment = Equipment(left_hand, right_hand, head, chest, feet)
     inventory = Inventory()
     stats = Stats(1)
     player = Player(inventory, equipment, stats)
-    armor = SimpleArmor(1)
-    buffs = [BasicBuff(1.0, 1.5)]
+    return player
+
+
+def _build_enemy():
+    armor = SimpleArmor(5)
+    buffs = [BasicBuff(1.0, 1.0)]
     target = SimpleEnemy(armor, buffs)
-
-    # Act
-    result = Damage.betweenTargets(player, target)
-
-    # Assert
-    print(result.amount)
-    assert result.amount == 26
+    return target
 
 
 player_calculate_damage_test()
 damage_between_targets_test()
+damage_to_player_test()

@@ -17,19 +17,11 @@ class Equipment:
         self.head = head
 
     def get_damage(self):
-        return (
-            self.left_hand.base_damage
-            + self.right_hand.base_damage
-            + self.head.base_damage
-            + self.feet.base_damage
-            + self.chest.base_damage
-        )
+        return self.left_hand.base_damage + self.right_hand.base_damage
 
     def get_damage_modifier(self):
-        return (
-            self.left_hand.damage_modifier
-            + self.right_hand.damage_modifier
-            + self.head.damage_modifier
-            + self.feet.damage_modifier
-            + self.chest.damage_modifier
-        )
+        return self.left_hand.damage_modifier + self.right_hand.damage_modifier
+
+    def get_soak(self):
+        # TODO implement damage soak
+        return 0

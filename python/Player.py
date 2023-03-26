@@ -27,8 +27,4 @@ class Player(Target):
         return stats_damage_modifier + equipment_damage_modifier
 
     def calculate_soak(self, damage: int) -> int:
-        # TODO: Not implemented yet
-        #   Add friendly fire
-        amount: int = damage
-
-        return amount
+        return self.equipment.get_soak()
