@@ -1,4 +1,5 @@
 from Item import Item
+from Damage import Damage
 
 
 class Equipment:
@@ -16,20 +17,14 @@ class Equipment:
         self._right_hand = right_hand
         self._head = head
 
-    def get_base_damage(self) -> int:
-        return (
-            self._left_hand.get_base_damage()
-            + self._right_hand.get_base_damage()
-            + self._head.get_base_damage()
-            + self._feet.get_base_damage()
-            + self._chest.get_base_damage()
-        )
-
-    def get_damage_modifier(self) -> float:
-        return (
-            self._left_hand.get_damage_modifier()
-            + self._right_hand.get_damage_modifier()
-            + self._head.get_damage_modifier()
-            + self._feet.get_damage_modifier()
-            + self._chest.get_damage_modifier()
-        )
+    def apply_damage(self, damage: Damage) -> Damage:
+        result = damage
+        for item in [
+            self._left_hand,
+            self._right_hand,
+            self._head,
+            self._chest,
+            self._feet,
+        ]:
+            result = item.apply_damage(result)
+        return result

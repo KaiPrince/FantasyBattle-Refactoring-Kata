@@ -1,8 +1,8 @@
-class Item:
-    def get_base_damage(self) -> int:
-        pass
+from Damage import Damage
 
-    def get_damage_modifier(self) -> float:
+
+class Item:
+    def apply_damage(self, damage: Damage) -> Damage:
         pass
 
 
@@ -19,8 +19,7 @@ class BaseItem(Item):
         self._base_damage = base_damage
         self._damage_modifier = damage_modifier
 
-    def get_base_damage(self) -> int:
-        return self._base_damage
-
-    def get_damage_modifier(self) -> float:
-        return self._damage_modifier
+    def apply_damage(self, damage: Damage) -> Damage:
+        with_damage = damage.add_damage(self._base_damage)
+        result = with_damage.add_damage_modifier(self._damage_modifier)
+        return result

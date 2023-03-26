@@ -10,17 +10,13 @@ class Player(Target):
         self._inventory = inventory
 
     def calculate_damage(self, other: Target) -> Damage:
-        base_damage = self._inventory.get_base_damage()
-        damage_modifier = self.__get_damage_modifier()
-        total_damage = round(base_damage * damage_modifier)
-        soak = other.get_soak(total_damage)
-        return Damage(max(0, total_damage - soak))
+        damage = Damage(0)
 
-    def __get_damage_modifier(self):
-        inventory_modifier = self._inventory.get_damage_modifier()
-        stats_modifier = self._stats.get_damage_modifier()
-        total_modifier = inventory_modifier + stats_modifier
-        return total_modifier
+        damage = self._inventory.apply_damage(damage)
+        damage = self._stats.apply_damage(damage)
+        damage = other.apply_damage_soak(damage)
+
+        return damage
 
     def get_soak(self, total_damage: int) -> int:
         # TODO: Not implemented yet

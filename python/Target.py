@@ -2,10 +2,11 @@ from typing import List
 
 from Armor import Armor
 from Buff import Buff
+from Damage import Damage
 
 
 class Target:
-    def get_soak(self, total_damage: int) -> int:
+    def apply_damage_soak(self, damage: Damage) -> Damage:
         pass
 
 
@@ -17,9 +18,8 @@ class SimpleEnemy(Target):
         self._armor = armor
         self._buffs = buffs
 
-    def get_soak(self, total_damage: int) -> int:
-        soak = round(
-            self._armor.get_damage_soak()
-            * (sum(buff.get_soak_modifier() for buff in self._buffs) + 1)
-        )
-        return soak
+    def apply_damage_soak(self, damage: Damage) -> Damage:
+        result = self._armor.apply_damage_soak(damage)
+        for buff in self._buffs:
+            result = buff.apply_damage_soak(result)
+        return result
