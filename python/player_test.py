@@ -27,9 +27,13 @@ def player_calculate_damage_test():
     player_2 = Player(inventory, equipment, stats)
 
     # Act
+    damage = player.calculate_damage()
     result = DamageCalculation.betweenTargets(player, player_2)
 
     # Assert
+    print(damage.amount)
+    assert damage.amount == 28
+
     print(result.amount)
     assert result.amount == 0
 
