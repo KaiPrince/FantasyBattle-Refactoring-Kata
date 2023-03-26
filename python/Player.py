@@ -1,4 +1,4 @@
-from Damage import Damage
+from DamageValue import DamageValue
 from Equipment import Equipment
 from Inventory import Inventory
 from Stats import Stats
@@ -17,18 +17,18 @@ class Player(Target):
         self.inventory = inventory
         self.equipment = equipment
 
-    def calculate_damage(self) -> Damage:
+    def calculate_damage(self) -> DamageValue:
         base_damage = self.equipment.get_damage()
         damage_modifier = self.__get_damage_modifier()
         total_damage = round(base_damage * damage_modifier)
-        return Damage(total_damage)
+        return DamageValue(total_damage)
 
     def __get_damage_modifier(self):
         equipment_damage_modifier = self.equipment.get_damage_modifier()
         stats_damage_modifier = self.stats.get_damage_modifier()
         return stats_damage_modifier + equipment_damage_modifier
 
-    def calculate_soak(self, damage: Damage) -> Soak:
+    def calculate_soak(self, damage: DamageValue) -> Soak:
         # TODO: Not implemented yet
         #   Add friendly fire
         amount: int = damage.amount

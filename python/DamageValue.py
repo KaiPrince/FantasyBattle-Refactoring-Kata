@@ -1,12 +1,12 @@
 from Soak import Soak
 
 
-class Damage:
+class DamageValue:
     amount: int
 
     def __init__(self, amount: int) -> None:
-        self.amount = amount
+        self.amount = max(0, amount)
 
     def applySoak(self, other: Soak):
         total_damage = self.amount - other.amount
-        return Damage(max(0, total_damage))
+        return DamageValue(total_damage)
