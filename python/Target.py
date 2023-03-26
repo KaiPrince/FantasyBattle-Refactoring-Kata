@@ -2,19 +2,17 @@ from typing import List
 
 from Armor import Armor
 from Buff import Buff
-from DamageValue import DamageValue
-from Soak import Soak
 
 from abc import ABC, abstractmethod
 
 
 class Target(ABC):
     @abstractmethod
-    def calculate_damage(self) -> DamageValue:
+    def calculate_damage(self) -> int:
         pass
 
     @abstractmethod
-    def calculate_soak(self, damage: DamageValue) -> Soak:
+    def calculate_soak(self, damage: int) -> int:
         pass
 
 
@@ -26,12 +24,12 @@ class SimpleEnemy(Target):
         self.armor = armor
         self.buffs = buffs
 
-    def calculate_damage(self) -> DamageValue:
-        return DamageValue(0)
+    def calculate_damage(self) -> int:
+        return int(0)
 
-    def calculate_soak(self, damage: DamageValue) -> Soak:
+    def calculate_soak(self, damage: int) -> int:
         amount = round(
-            self.armor.damage_soak
+            self.armor.damage_soak.amount
             * (sum(buff.soak_modifier for buff in self.buffs) + 1)
         )
-        return Soak(amount)
+        return amount
