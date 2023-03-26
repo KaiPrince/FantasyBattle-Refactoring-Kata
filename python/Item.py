@@ -2,11 +2,6 @@ from Damage import Damage
 
 
 class Item:
-    def apply_damage(self, damage: Damage) -> Damage:
-        pass
-
-
-class BaseItem(Item):
     name: str
 
     def __init__(

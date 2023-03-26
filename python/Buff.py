@@ -2,14 +2,6 @@ from Damage import Damage
 
 
 class Buff:
-    def apply_damage(self, damage: Damage) -> Damage:
-        pass
-
-    def apply_damage_soak(self, damage: Damage) -> Damage:
-        pass
-
-
-class BasicBuff(Buff):
     def __init__(self, soak_modifier: float, damage_modifier: float) -> None:
         self._soak_modifier = soak_modifier
         self._damage_modifier = damage_modifier
