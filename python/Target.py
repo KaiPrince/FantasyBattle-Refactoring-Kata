@@ -19,7 +19,7 @@ class SimpleEnemy(Target):
 
     def get_soak(self, total_damage: int) -> int:
         soak = round(
-            self._armor.damage_soak
-            * (sum(buff.soak_modifier for buff in self._buffs) + 1)
+            self._armor.get_damage_soak()
+            * (sum(buff.get_soak_modifier() for buff in self._buffs) + 1)
         )
         return soak
