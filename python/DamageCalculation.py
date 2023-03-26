@@ -15,5 +15,5 @@ class DamageCalculation:
     @staticmethod
     def betweenTargets(attacker: Target, defender: Target) -> Damage:
         total_damage = attacker.calculate_damage()
-        soak = defender.get_soak(total_damage)
-        return total_damage.subtract(soak)
+        soak = defender.calculate_soak(total_damage)
+        return total_damage.applySoak(soak)

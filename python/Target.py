@@ -3,6 +3,7 @@ from typing import List
 from Armor import Armor
 from Buff import Buff
 from Damage import Damage
+from Soak import Soak
 
 from abc import ABC, abstractmethod
 
@@ -13,7 +14,7 @@ class Target(ABC):
         pass
 
     @abstractmethod
-    def get_soak(self, damage: Damage) -> Damage:
+    def calculate_soak(self, damage: Damage) -> Soak:
         pass
 
 
@@ -28,9 +29,9 @@ class SimpleEnemy(Target):
     def calculate_damage(self) -> Damage:
         return Damage(0)
 
-    def get_soak(self, damage: Damage) -> Damage:
-        soak = round(
+    def calculate_soak(self, damage: Damage) -> Soak:
+        amount = round(
             self.armor.damage_soak
             * (sum(buff.soak_modifier for buff in self.buffs) + 1)
         )
-        return soak
+        return Soak(amount)
