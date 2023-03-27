@@ -39,15 +39,14 @@ def test_enemy_apply_damage_soak():
     assert soak._modifier - 3 < 0.01
 
 
-def test_damage_calculation_strategy():
+def test_damage_calculation():
     # Arrange
     player = _build_player()
     enemy = _build_enemy()
-    damage = player.calculate_damage()
-    soak = enemy.calculate_soak()
 
     # Act
-    result = max(0, damage.calculate() - soak.calculate())
+    result = player.attack(enemy)
+
     # Assert
     assert result == 42
 

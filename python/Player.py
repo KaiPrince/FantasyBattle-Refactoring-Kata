@@ -25,3 +25,9 @@ class Player(Target):
         soak = Damage(SoakCalculationStrategy(), 0)
 
         return soak
+
+    def attack(self, target: Target) -> int:
+        damage = self.calculate_damage()
+        soak = target.calculate_soak()
+        result = max(0, damage.calculate() - soak.calculate())
+        return result
